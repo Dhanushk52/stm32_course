@@ -1,5 +1,8 @@
 name: Build STM32 Firmware
 
+permissions:
+  contents: write   # ✅ allow creating releases
+
 on:
   push:
     branches: [ "main" ]
