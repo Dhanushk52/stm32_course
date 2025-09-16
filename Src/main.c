@@ -22,7 +22,7 @@ int main(void)
     while (1)
     {
         uart_send_string("Looping...\r\n");
-        HAL_Delay(1000); // 1 second delay
+        HAL_Delay(1000); // 1 sec delay
     }
 }
 
