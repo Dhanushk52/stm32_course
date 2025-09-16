@@ -23,5 +23,5 @@ jobs:
         with:
           name: stm32-firmware
           path: |
-            build/*.bin
-            build/*.elf
+            Build/*.bin
+            Build/*.elf
