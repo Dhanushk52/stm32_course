@@ -1,0 +1,33 @@
+name: STM32 Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout your repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Install ARM GCC toolchain
+      - name: Install ARM GCC
+        run: |
+          sudo apt update
+          sudo apt install -y gcc-arm-none-eabi binutils-arm-none-eabi
+
+      # Step 3: Build using Makefile
+      - name: Build project
+        run: make
+
+      # Step 4: Upload the .bin as artifact
+      - name: Upload firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: firmware-bin
+          path: build/*.bin
