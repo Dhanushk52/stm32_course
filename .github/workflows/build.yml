@@ -1,27 +1,43 @@
-name: STM32 Build
+name: Build STM32 Firmware
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4   # latest checkout
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Install ARM GCC Toolchain
+      - name: Install ARM Toolchain
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-arm-none-eabi make
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi
 
-      - name: Build project
+      - name: Build firmware
         run: make
 
-      - name: Upload firmware artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: stm32-firmware
           path: |
             Build/*.bin
             Build/*.elf
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: v${{ github.run_number }}
+          name: "STM32 Firmware Build ${{ github.run_number }}"
+          files: |
+            Build/*.bin
+            Build/*.elf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
