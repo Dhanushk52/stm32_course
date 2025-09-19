@@ -4,10 +4,7 @@ permissions:
   contents: write   # ✅ allow creating releases
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
