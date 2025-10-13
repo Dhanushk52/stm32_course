@@ -1,3 +1,4 @@
+
 ---
 
 ````markdown
@@ -198,3 +199,24 @@ Hello, Embedded Linux!
 * Understand **GCC’s 4-step compilation process**
 
 ---
+
+## 📸 Optional: Screenshot Placeholders
+
+Add your screenshots to make it visual for students:
+
+```
+![WSL Setup](images/wsl_setup.png)
+![File Navigation](images/file_navigation.png)
+![GCC Installation](images/gcc_install.png)
+![Compilation Demo](images/compile_run.png)
+```
+
+---
+
+
+
+```
+
+---
+
+```
