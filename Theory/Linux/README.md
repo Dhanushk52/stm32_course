@@ -1,4 +1,3 @@
----
 
 ````markdown
 # 🧠 Introduction to Linux Environment (2 Hours)
