@@ -1,63 +1,157 @@
+*Embedded Firmware Course* — including:
+
+* Why Linux
+* Why WSL Ubuntu
+* Linux basics
+* GCC setup
+* Hello World compilation
+* Assignments & summary
+
+This version is **ready for GitHub**, **slides**, or **video recording script** — smooth, clean, and flow-based for 2 hours.
+
+---
 
 ````markdown
-# 🧠 Introduction to Linux Environment (2 Hours)
-
-## 🎯 Objective
-By the end of this session, students will:
-- Understand and navigate the Linux file system  
-- Set up and use **GCC (GNU Compiler Collection)**  
-- Create, compile, and run C programs using **WSL (Windows Subsystem for Linux)**  
-- Get comfortable with the terminal workflow for embedded firmware development  
+# 🧠 Introduction to Linux Environment for Embedded Firmware Development  
+**Duration:** 2 Hours  
+**Platform:** WSL (Ubuntu on Windows)
 
 ---
 
-## 🕒 Duration Breakdown
-
-| Topic | Duration |
-|-------|-----------|
-| Linux-based Virtual Machine Setup (WSL) | 20 mins |
-| File System & Navigation | 20 mins |
-| Understanding & Setting up GCC | 20 mins |
-| Creating, Compiling & Running a C Program | 40 mins |
-| Assignments | 20 mins |
+## 🎯 Learning Objectives
+By the end of this session, you will:
+- Understand **why Linux is used in Embedded Systems**
+- Learn **why WSL (Ubuntu)** is the best environment for students
+- Explore the **Linux file system and navigation commands**
+- Set up **GCC compiler** and understand its workflow
+- Write, compile, and run a simple **C program**
+- Understand how compilation works (Preprocessing → Linking)
+- Practice assignments from **easy → hard**
 
 ---
 
-## 🧩 1. Linux Based Virtual Machine Setup (WSL)
+## 🧩 1. Why Linux for Embedded Programming?
 
-### ✅ What is WSL?
-WSL (Windows Subsystem for Linux) lets you run Linux commands on Windows — no dual boot needed.
+### 💡 1. Industry Standard
+- Most embedded devices (IoT, routers, automotive ECUs, smart TVs, drones) run **Linux or Linux-based OS**.
+- Firmware engineers work in Linux because it gives full system control and open-source tools.
 
-### 🪜 Steps to Install WSL
-1. Open **PowerShell as Administrator**
-2. Run this command:
-   ```bash
-   wsl --install
+---
+
+### 🧰 2. Open Source & Developer Friendly
+- Linux is **free and open-source** — no license required.
+- Developers can modify, rebuild, or debug kernel-level code if needed.
+
+---
+
+### ⚙️ 3. Command-Line Power
+- The Linux terminal is your **main development tool**.
+- Common commands used in embedded projects:
+  - `gcc` → compile code  
+  - `make` → automate builds  
+  - `gdb` → debugging  
+  - `grep`, `awk`, `sed` → log and text filtering  
+  - `lsusb`, `dmesg` → device and hardware info  
+
+---
+
+### 🧩 4. Cross-Compilation Support
+- In embedded systems, code runs on ARM-based boards but is compiled on a PC.
+- Linux supports **cross-compilers** like `arm-none-eabi-gcc`.
+
+---
+
+### 🧠 5. Automation Friendly
+- Linux scripting makes repetitive tasks (building, flashing, logging) easy using **bash** or **Python scripts**.
+
+---
+
+### 🔍 6. Hardware-Level Debugging
+- Direct access to `/dev/ttyUSB0`, GPIOs, and serial devices.
+- Ideal for flashing firmware and debugging MCU boards.
+
+---
+
+### 🌎 7. Real Engineering Ecosystem
+- 90% of embedded toolchains (ST, TI, NXP, Microchip, etc.) work smoothly on Linux.
+- Open-source communities also share scripts and drivers for Linux.
+
+---
+
+## 🧱 2. Why WSL (Ubuntu on Windows)?
+
+### 🧩 1. Best of Both Worlds
+- Use **Windows and Linux together** — no dual boot needed.
+- Develop in Linux tools while using Windows for documents, IDEs, etc.
+
+---
+
+### ⚡ 2. Lightweight and Fast
+- WSL2 uses a **real Linux kernel** running inside Windows.
+- Commands run nearly as fast as native Linux.
+
+---
+
+### 🖥️ 3. Works Directly Inside Windows
+You can switch easily:
+```bash
+C:\Users\Boss\project> wsl
+$ gcc main.c -o main
+$ ./main
 ````
 
-3. Restart your system when prompted.
-4. Open the **Ubuntu** app from the Start menu.
-5. Create a username and password for your Linux environment.
+---
+
+### 🔧 4. All Embedded Tools Supported
+
+* `gcc`, `make`, `gdb`, `git`, `python3` — all work perfectly.
+* No need for a full Ubuntu installation.
 
 ---
 
-## 🧭 2. File System and Navigation
+### 🔄 5. File Sharing Between Windows & Linux
 
-| Command            | Description                     |
-| ------------------ | ------------------------------- |
-| `pwd`              | Print current working directory |
-| `ls`               | List files and directories      |
-| `cd <directory>`   | Change directory                |
-| `mkdir <dir_name>` | Create a new directory          |
-| `rmdir <dir_name>` | Remove an empty directory       |
-| `rm <file_name>`   | Remove a file                   |
-| `clear`            | Clear the terminal              |
+* Files are accessible both ways.
+* Edit in VS Code (Windows) → Compile inside WSL.
 
-### 💡 Example
+---
+
+### 🧰 6. Simple for Beginners
+
+```bash
+wsl --install
+```
+
+That’s all you need to set up Ubuntu Linux inside Windows.
+
+---
+
+### 🚀 7. Real Industry Workflow
+
+* Many professionals use **VS Code + WSL + GCC + Git** setup.
+* This is exactly what you’ll learn in this course.
+
+---
+
+## 🧭 3. Navigating Linux File System
+
+### Common Commands
+
+| Command          | Description            |
+| ---------------- | ---------------------- |
+| `pwd`            | Show current directory |
+| `ls`             | List files/folders     |
+| `cd <folder>`    | Move into folder       |
+| `mkdir <folder>` | Create a folder        |
+| `rmdir <folder>` | Remove a folder        |
+| `rm <file>`      | Remove a file          |
+| `clear`          | Clear terminal screen  |
+
+### Example:
 
 ```bash
 pwd
-/home/akshay
+/home/student
 ls
 mkdir test
 cd test
@@ -65,34 +159,38 @@ cd test
 
 ---
 
-## ⚙️ 3. Understanding and Setting up GCC
+## ⚙️ 4. Setting Up GCC Compiler
 
-GCC (GNU Compiler Collection) is the compiler we use to compile C programs.
+### What is GCC?
 
-### 🪄 To install GCC (if not installed):
+**GCC (GNU Compiler Collection)** converts your C code into machine-executable format.
+
+### Install GCC
 
 ```bash
 sudo apt update
 sudo apt install gcc
 ```
 
-### ✅ Verify installation:
+### Check Version
 
 ```bash
 gcc --version
 ```
 
+✅ Output should show GCC version details.
+
 ---
 
-## 💻 4. Creating a C File and Compilation
+## 💻 5. Creating, Compiling & Running a C Program
 
-### Step 1: Create and edit a file
+### Step 1: Create a new file
 
 ```bash
 nano hello.c
 ```
 
-### Step 2: Write your first C program
+### Step 2: Type this C code
 
 ```c
 #include <stdio.h>
@@ -105,9 +203,11 @@ int main() {
 
 ### Step 3: Save and Exit Nano
 
-* Press **Ctrl + O** → Save
-* Press **Enter** → Confirm file name
-* Press **Ctrl + X** → Exit
+* **Ctrl + O** → Save
+* **Enter** → Confirm file name
+* **Ctrl + X** → Exit editor
+
+---
 
 ### Step 4: Compile the program
 
@@ -117,8 +217,9 @@ gcc hello.c -o hello
 
 ### Step 5: Run the program
 
-👉 Since you’re using **WSL**, it creates a Windows-compatible `.exe` file.
-You can run it in two ways:
+In WSL, the compiled output is a Windows-compatible `.exe` file.
+
+Run it as:
 
 ```bash
 ./hello.exe
@@ -130,50 +231,51 @@ or simply:
 hello.exe
 ```
 
----
+✅ **Output:**
 
-### ⚙️ Compilation Steps (Behind the Scenes)
-
-| Stage         | Command                     | Description                                    |
-| ------------- | --------------------------- | ---------------------------------------------- |
-| Preprocessing | `gcc -E hello.c -o hello.i` | Expands macros and includes header files       |
-| Compilation   | `gcc -S hello.i -o hello.s` | Converts C code to assembly                    |
-| Assembly      | `gcc -c hello.s -o hello.o` | Converts assembly to machine code              |
-| Linking       | `gcc hello.o -o hello.exe`  | Combines all objects into the final executable |
-
-> 💬 **Comment:** The linking step generates the final executable — `hello.exe` in WSL.
+```
+Hello, Embedded Linux!
+```
 
 ---
 
-## 🎥 5. Video Plan (5–10 min per topic)
+## 🔍 6. Understanding Compilation Steps
 
-Each video should contain:
+| Step          | Command                     | Description                            |
+| ------------- | --------------------------- | -------------------------------------- |
+| Preprocessing | `gcc -E hello.c -o hello.i` | Expands macros, includes headers       |
+| Compilation   | `gcc -S hello.i -o hello.s` | Converts to assembly                   |
+| Assembly      | `gcc -c hello.s -o hello.o` | Converts to object code                |
+| Linking       | `gcc hello.o -o hello.exe`  | Combines everything into final program |
 
-* 1–2 PPT slides explaining the concept
-* Live terminal demo
-* Simple example per concept
-
-| Topic                              | Duration | Type          |
-| ---------------------------------- | -------- | ------------- |
-| WSL Setup                          | 10 min   | Demo          |
-| File System Navigation             | 5 min    | Demo          |
-| GCC Setup                          | 5 min    | Demo          |
-| Writing and Compiling Hello World  | 10 min   | Demo          |
-| Explanation of Compilation Process | 5 min    | Slides + Demo |
+> 💬 Linking step creates the final `.exe` — the complete program ready to run.
 
 ---
 
-## 🧠 6. Assignments (Easy → Hard)
+## 🎥 7. Suggested Video Plan (for 5–10 mins each)
 
-| Level     | Task                                                                    | Hint                     |
-| --------- | ----------------------------------------------------------------------- | ------------------------ |
-| 🟢 Easy   | Create and run a C program that prints your name.                       | Modify `printf()`        |
-| 🟡 Medium | Write a program that takes two numbers as input and prints their sum.   | Use `scanf()`            |
-| 🔴 Hard   | Create a program that reads a text file and counts the number of lines. | Use `fopen()`, `fgets()` |
+| Topic                           | Duration | Type          |
+| ------------------------------- | -------- | ------------- |
+| Why Linux & Why WSL             | 10 min   | Slides        |
+| WSL Setup                       | 10 min   | Demo          |
+| File System Navigation          | 10 min   | Demo          |
+| GCC Installation                | 5 min    | Demo          |
+| Writing & Compiling Hello World | 10 min   | Demo          |
+| Compilation Process Explained   | 5 min    | Slides + Demo |
+| Assignments & Wrap-Up           | 10 min   | Slides        |
 
 ---
 
-## 🧩 7. Expected Output
+## 🧠 8. Assignments (Easy → Hard)
+
+| Level     | Task                                 | Hint                        |
+| --------- | ------------------------------------ | --------------------------- |
+| 🟢 Easy   | Print your name using `printf()`     | Simple print statement      |
+| 🟡 Medium | Take two numbers and print their sum | Use `scanf()` for input     |
+
+---
+
+## 🧩 9. Example Output in WSL
 
 ```bash
 C:\Users\Akshay\test>nano hello.c
@@ -186,35 +288,20 @@ Hello, Embedded Linux!
 
 ---
 
-## 🧾 Summary
+## 🧾 10. Recap
 
-✅ You learned how to:
+✅ You learned:
 
-* Use **WSL as a Linux workspace**
-* Navigate the file system
-* Install and use **GCC**
-* Create, compile, and run **C programs**
-* Understand **GCC’s 4-step compilation process**
-
----
-
-## 📸 Optional: Screenshot Placeholders
-
-Add your screenshots to make it visual for students:
-
-```
-![WSL Setup](images/wsl_setup.png)
-![File Navigation](images/file_navigation.png)
-![GCC Installation](images/gcc_install.png)
-![Compilation Demo](images/compile_run.png)
-```
+* Why **Linux** is essential for embedded firmware
+* Why **WSL Ubuntu** is the best setup for beginners
+* How to navigate the Linux terminal
+* How to install and use **GCC**
+* How the **C compilation process** works
+* How to write, compile, and execute your own programs
 
 ---
 
-
-
-```
-
----
+💬 *"Before you blink an LED on STM32, you should know how to compile code in Linux — that’s where every embedded journey begins!"*
 
 ```
+
