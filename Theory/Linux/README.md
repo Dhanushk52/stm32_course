@@ -165,9 +165,10 @@ cd test
 
 **GCC (GNU Compiler Collection)** converts your C code into machine-executable format.
 
-### Install GCC
+### Install GCC 
 
 ```bash
+wsl          //it opens wsl from cmd prompt
 sudo apt update
 sudo apt install gcc
 ```
